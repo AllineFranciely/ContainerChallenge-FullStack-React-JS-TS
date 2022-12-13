@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAsyncValue, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TableContainers from '../components/ContainerTable';
 
 function Containers() {
@@ -7,7 +7,7 @@ function Containers() {
 
   const [state, setState] = useState({
     cliente: '',
-    numero: 11,
+    numero: '',
     tipo: 20,
     situacao: 'Cheio',
     categoria: 'Importação',
@@ -20,7 +20,7 @@ function Containers() {
 
     setState((prevState) => ({
       ...prevState,
-      [name]: useAsyncValue,
+      [name]: value,
     }));
   }
 
@@ -34,9 +34,10 @@ function Containers() {
       },
       body: JSON.stringify(state)
     };
-    const data = await fetch('http://localhost:8000/container', obj);
+    const data = await fetch('http://localhost:8000/containers', obj);
     return data;
   }
+  
   return (
     <div>
       <p>Cadastrar novo Container</p>
@@ -56,13 +57,42 @@ function Containers() {
           placeholder="Número do container"
         />
         <select
-        name="tipo"
-        value={tipo}
-        onChange={handleChange}>
-
+          name="tipo"
+          value={tipo}
+          onChange={handleChange}
+        >
+          <option value="20">20</option>
+          <option value="40">40</option>
         </select>
+        <select
+          name="situacao"
+          value={situacao}
+          onChange={handleChange}
+        >
+          <option value="Cheio">Cheio</option>
+          <option value="Vazio">Vazio</option>
+        </select>
+        <select
+          name="categoria"
+          value={categoria}
+          onChange={handleChange}
+        >
+          <option value="Importação">Importação</option>
+          <option value="Exportação">Exportação</option>
+        </select>
+        <button
+          type="submit"
+          onSubmit={handleSubmit}
+        >
+          Salvar
+        </button>
       </form>
       <TableContainers />
+      <button
+        type="button"
+        onClick={() => navigate('/movimentacoes')}>
+        Ver Movimentações
+      </button>
     </div>
   );
 }

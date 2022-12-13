@@ -49,7 +49,7 @@ function TableContainers() {
           comparison: event.target.value
         }])}>
         <option value="Importação">Importação</option>
-        <option value="Ecportação">Exportação</option>
+        <option value="Exportação">Exportação</option>
       </select>
       <button
         type="button"
